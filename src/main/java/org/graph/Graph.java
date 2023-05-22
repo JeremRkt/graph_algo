@@ -37,31 +37,31 @@ public abstract class Graph<V extends Comparable<V>, E> {
     }
 
     public List<V> dfs(V startVertex) {
-
         List<V> visitOrder = new ArrayList<>();
         if (!adjacencyList.containsKey(startVertex)) {
             return visitOrder;
         }
-        Stack<V> stack = new Stack<>();
-        Set<V> visited = new HashSet<>();
-        stack.push(startVertex);
 
-        while (stack.isEmpty()) {
-            V currentStack = stack.pop();
-            if (!visited.contains(currentStack)) {
-                visited.add(currentStack);
-                visitOrder.add(currentStack);
-                for (E edge : adjacencyList.get(currentStack)) {
+        PriorityQueue<V> priorityQueue = new PriorityQueue<>();
+        Set<V> visited = new HashSet<>();
+        priorityQueue.add(startVertex);
+
+        while (!priorityQueue.isEmpty()) {
+            V currentVertex = priorityQueue.poll();
+            if (!visited.contains(currentVertex)) {
+                visited.add(currentVertex);
+                visitOrder.add(currentVertex);
+                for (E edge : adjacencyList.get(currentVertex)) {
                     V toVertex = getToVertex(edge);
                     if (toVertex != null && !visited.contains(toVertex)) {
-                        stack.push(toVertex);
+                        priorityQueue.add(toVertex);
                     }
                 }
             }
         }
-
         return visitOrder;
     }
+
 
     public abstract V getToVertex(E edge);
 

@@ -2,34 +2,35 @@ package org.graph;
 
 import java.util.Set;
 
-public class WDigraph<V extends Comparable<V>> extends Graph<V, DirectedEdge> {
+public class WDigraph<V extends Comparable<V>> extends Graph<Integer, DirectedEdge> {
 
     public WDigraph() {
         super();
     }
-
     @Override
-    public V getToVertex(DirectedEdge edge) {
+    public Integer getToVertex(DirectedEdge edge) {
         return edge.to();
     }
 
     @Override
-    public void addEdge(V vertex1, V vertex2, DirectedEdge edge) {
+    public void addEdge(Integer vertex1, Integer vertex2, DirectedEdge edge) {
         addVertex(vertex1);
         addVertex(vertex2);
 
         adjacencyList.get(vertex1).add(edge);
         m++;
     }
-    public Set<V> getVertices() {
+    
+    public Set<Integer> getVertices() {
         return this.adjacencyList.keySet();
     }
-    public Set<DirectedEdge> getOutgoingEdges(V vertex) {
+    public Set<DirectedEdge> getOutgoingEdges(Integer vertex) {
         if (!hasVertex(vertex)) {
             throw new IllegalArgumentException("Vectex does not exist in graph");
         }
         return adjacencyList.get(vertex);
     }
+
 }
 
 
